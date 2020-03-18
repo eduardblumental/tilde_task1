@@ -5,12 +5,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lv.tilde.eduards.task1.enums.TransactionType;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class TransactionDTO {
+public class NewTransactionDTO {
+
+    @NotEmpty
+    @NotNull
     private Long amount;
+    @NotEmpty
     private TransactionType transactionType;
+    @NotEmpty
     private String senderUsername;
+    @NotEmpty
     private String receiverUsername;
 }
