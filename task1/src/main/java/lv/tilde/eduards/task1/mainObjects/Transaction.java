@@ -27,7 +27,7 @@ public class Transaction {
     private Long amount;
 
     @Column
-    private TransactionType transactionType;
+    private TransactionType type;
 
     @Column
     private Long senderId;
