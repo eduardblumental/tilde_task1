@@ -35,6 +35,4 @@ public class Transaction {
     @Column
     private Long receiverId;
 
-
-
 }
