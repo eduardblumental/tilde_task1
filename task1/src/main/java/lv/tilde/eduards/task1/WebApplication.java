@@ -2,12 +2,15 @@ package lv.tilde.eduards.task1;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-public class Task1Application {
+@EnableJpaRepositories
+public class WebApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Task1Application.class, args);
+
+		SpringApplication.run(WebApplication.class, args);
 	}
 
 }
