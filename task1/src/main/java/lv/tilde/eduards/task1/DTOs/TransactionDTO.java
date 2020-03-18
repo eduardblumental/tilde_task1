@@ -3,7 +3,7 @@ package lv.tilde.eduards.task1.DTOs;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lv.tilde.eduards.task1.Enums.TransactionType;
+import lv.tilde.eduards.task1.enums.TransactionType;
 
 @AllArgsConstructor
 @NoArgsConstructor

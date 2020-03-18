@@ -1,41 +1,40 @@
-package lv.tilde.eduards.task1.mainObjects;
+package lv.tilde.eduards.task1.objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lv.tilde.eduards.task1.enums.TransactionType;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
 @Data
-public class User {
+public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty
-    @Column (unique = true)
-    private String username;
+    @Column
+    private LocalDateTime dateTime;
 
     @Column
-    private Long grossDebtors;
+    private Long amount;
 
     @Column
-    private Long grossCreditors;
+    private TransactionType type;
 
     @Column
-    private Long netDebtors;
+    private Long senderId;
 
     @Column
-    private Long netCreditors;
+    private Long receiverId;
 
-    @Column
-    private Long balance;
+
 
 }
