@@ -44,11 +44,11 @@
 			<scope>compile</scope>
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>org.postgresql</groupId>-->
-<!--			<artifactId>postgresql</artifactId>-->
-<!--			<scope>42.2.6</scope>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>42.2.6</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -68,12 +68,12 @@
 			</exclusions>
 		</dependency>
 
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-			<version>1.4.199</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.h2database</groupId>-->
+<!--			<artifactId>h2</artifactId>-->
+<!--			<scope>test</scope>-->
+<!--			<version>1.4.199</version>-->
+<!--		</dependency>-->
 
 	</dependencies>
 
