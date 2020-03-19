@@ -7,14 +7,12 @@ import lv.tilde.eduards.task1.objects.User;
 import lv.tilde.eduards.task1.services.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@RestController
 public class UserController {
 
     private final UserService userService;
