@@ -25,21 +25,21 @@ public class TransactionController {
     }
 
     @PostMapping (value = "/new-transaction", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseStatus performNewTransaction (@RequestBody @Valid NewTransactionDTO newTransactionDTO, BindingResult bindingResult){
+    public ResponseStatus newTransaction (@RequestBody @Valid NewTransactionDTO newTransactionDTO, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new CustomBadRequestException("Wrong Input. Please try again.");
         }
 
-//        TODO Service
+        return transactionService.executeNewTransaction(newTransactionDTO);
     }
 
     @PostMapping (value = "/transaction-list", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Transaction> viewTransactionList (@RequestBody @Valid TransactionListDTO transactionListDTO, BindingResult bindingResult){
+    public List<Transaction> transactionList (@RequestBody @Valid TransactionListDTO transactionListDTO, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new CustomBadRequestException("Wrong Input. Please try again.");
         }
 
-//        TODO Service
+        return transactionService.displayTransactions(transactionListDTO);
     }
 
 }

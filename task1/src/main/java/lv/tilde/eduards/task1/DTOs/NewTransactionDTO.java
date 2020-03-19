@@ -19,7 +19,7 @@ public class NewTransactionDTO {
     @NotEmpty
     private TransactionType transactionType;
     @NotEmpty
-    private String senderUsername;
+    private String sender;
     @NotEmpty
-    private String receiverUsername;
+    private String receiver;
 }

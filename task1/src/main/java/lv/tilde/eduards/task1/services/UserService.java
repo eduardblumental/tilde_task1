@@ -2,6 +2,7 @@ package lv.tilde.eduards.task1.services;
 
 import lv.tilde.eduards.task1.DAOs.UserDAO;
 import lv.tilde.eduards.task1.DTOs.NewUserDTO;
+import lv.tilde.eduards.task1.DTOs.ViewUserDTO;
 import lv.tilde.eduards.task1.controllers.UserController;
 import lv.tilde.eduards.task1.enums.ResponseStatus;
 import lv.tilde.eduards.task1.exceptions.CustomBadRequestException;
@@ -35,8 +36,14 @@ public class UserService {
     }
 
     public void usernameAlreadyExists (String username) {
-        if(userDAO.existsByUsername(username){
+        if(userDAO.existsByUsername(username)){
             throw new CustomBadRequestException("User with username: \"" + username + "\" already exists.");
+        }
+    }
+
+    public void usernameDoesNotExist (String username) {
+        if(!userDAO.existsByUsername(username)){
+            throw new CustomBadRequestException("User with username: \"" + username + "\" doesn't exist.");
         }
     }
 
@@ -50,12 +57,14 @@ public class UserService {
         user.setNetCreditors(newUserDTO.getNetCreditors());
         user.setBalance(user.getNetDebtors() - user.getNetCreditors());
         userDAO.save(user);
+        LOGGER.info(user.getUsername() + " has been added to the system.");
         return ResponseStatus.OK;
     }
 
-    public User viewUser (String username){
-        Optional<User> optionalUser = userDAO.findById(findUserIdByUsername(username));
+    public User viewUser (ViewUserDTO viewUserDTO){
+        Optional<User> optionalUser = userDAO.findById(findUserIdByUsername(viewUserDTO.getUsername()));
         User user = optionalUser.get();
+        LOGGER.info("Request to view " + user.getUsername() + " has been submitted.");
         return user;
     }
 
@@ -66,8 +75,8 @@ public class UserService {
             list.add(user);
         }
 
+        LOGGER.info("Request to view all users has been submitted.");
         return list;
     }
-
 
 }

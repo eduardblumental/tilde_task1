@@ -2,6 +2,7 @@ package lv.tilde.eduards.task1.controllers;
 
 import lv.tilde.eduards.task1.DTOs.ViewUserDTO;
 import lv.tilde.eduards.task1.DTOs.NewUserDTO;
+import lv.tilde.eduards.task1.enums.ResponseStatus;
 import lv.tilde.eduards.task1.exceptions.CustomBadRequestException;
 import lv.tilde.eduards.task1.objects.User;
 import lv.tilde.eduards.task1.services.UserService;
@@ -22,12 +23,12 @@ public class UserController {
     }
 
     @PostMapping (value = "/new-user", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseStatus addNewUser (@RequestBody @Valid NewUserDTO newUserDTO, BindingResult bindingResult){
+    public ResponseStatus newUser (@RequestBody @Valid NewUserDTO newUserDTO, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new CustomBadRequestException("Wrong Input. Please try again.");
         }
 
-//        TODO Service
+        return userService.addNewUser(newUserDTO);
     }
 
     @PostMapping (value = "/view-user", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -36,12 +37,12 @@ public class UserController {
             throw new CustomBadRequestException("Wrong Input. Please try again.");
         }
 
-//        TODO Service
+        return userService.viewUser(viewUserDTO);
     }
 
-    @GetMapping(value = "/user-list", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<User> displayAllUsers () {
+    @GetMapping (value = "/user-list", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<User> userList () {
 
-//        TODO Service
+        return userService.displayAllUsers();
     }
 }
