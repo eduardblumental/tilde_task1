@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class TransactionService {
@@ -41,33 +42,37 @@ public class TransactionService {
         Transaction transaction = new Transaction();
         transaction.setDateTime(LocalDateTime.now());
         transaction.setTransactionType(newTransactionDTO.getTransactionType());
-        transaction.setAmount(newTransactionDTO.getAmount())
+        transaction.setAmount(newTransactionDTO.getAmount());
         transaction.setSenderId(userService.findUserIdByUsername(newTransactionDTO.getSender()));
         transaction.setReceiverId(userService.findUserIdByUsername(newTransactionDTO.getReceiver()));
         transactionDAO.save(transaction);
 
-        User sender = userDAO.findById(transaction.getSenderId());
-        User receiver = userDAO.findById(transaction.getReceiverId());
+        Optional<User> optionalSender = userDAO.findById(transaction.getSenderId());
+        User sender = optionalSender.get();
 
-        switch (transaction.getTransactionType()){
-            case TransactionType.LAND_BORROW:
-                sender.setGrossDebtors(sender.getGrossDebtors() + transaction.getAmount());
-                sender.setNetDebtors(sender.getNetDebtors() + transaction.getAmount());
-                receiver.setGrossCreditors(sender.getGrossCreditors() + transaction.getAmount());
-                receiver.setNetCreditors(sender.getNetCreditors() + transaction.getAmount());
+        Optional<User> optionalReceiver = userDAO.findById(transaction.getReceiverId());
+        User receiver = optionalReceiver.get();
 
-                sender.setBalance(sender.getBalance() + transaction.getAmount());
-                receiver.setBalance(sender.getBalance() - transaction.getAmount());
-                break;
-            case TransactionType.RETURN_RECEIVE:
-                sender.setNetCreditors(sender.getNetCreditors() - transaction.getAmount());
-                receiver.setNetDebtors(sender.getNetDebtors() - transaction.getAmount());
+        if(transaction.getTransactionType() == TransactionType.LAND_BORROW){
+            sender.setGrossDebtors(sender.getGrossDebtors() + transaction.getAmount());
+            sender.setNetDebtors(sender.getNetDebtors() + transaction.getAmount());
+            receiver.setGrossCreditors(receiver.getGrossCreditors() + transaction.getAmount());
+            receiver.setNetCreditors(receiver.getNetCreditors() + transaction.getAmount());
 
-                sender.setBalance(sender.getBalance() + transaction.getAmount());
-                receiver.setBalance(sender.getBalance() - transaction.getAmount());
-                break;
+        }   else if(transaction.getTransactionType() == TransactionType.RETURN_RECEIVE){
+            sender.setNetCreditors(sender.getNetCreditors() - transaction.getAmount());
+            receiver.setNetDebtors(receiver.getNetDebtors() - transaction.getAmount());
 
+        }   else    {
+            throw new CustomBadRequestException("Please, enter a valid transaction type.");
         }
+
+        sender.setBalance(sender.getNetDebtors() - sender.getNetCreditors());
+        receiver.setBalance(receiver.getNetDebtors() - receiver.getNetCreditors());
+
+
+        userDAO.save(sender);
+        userDAO.save(receiver);
 
         LOGGER.info("New transaction has been executed.");
 

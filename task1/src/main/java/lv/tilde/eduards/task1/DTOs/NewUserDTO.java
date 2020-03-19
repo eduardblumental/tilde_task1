@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,8 +14,12 @@ public class NewUserDTO {
 
     @NotEmpty
     private String username;
+    @NotNull
     private Long grossDebtors;
+    @NotNull
     private Long grossCreditors;
+    @NotNull
     private Long netDebtors;
+    @NotNull
     private Long netCreditors;
 }

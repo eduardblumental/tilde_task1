@@ -29,7 +29,7 @@ public class UserService {
     public Long findUserIdByUsername (String username){
         Optional<User> optionalUser = userDAO.findByUsername(username);
         if(optionalUser.isEmpty()){
-            throw new CustomBadRequestException("User with username: \"" + username + "\" doesn't exist.");
+            throw new CustomBadRequestException("User with username " + username + " doesn't exist.");
         }
         User user = optionalUser.get();
         return user.getId();
@@ -37,13 +37,13 @@ public class UserService {
 
     public void usernameAlreadyExists (String username) {
         if(userDAO.existsByUsername(username)){
-            throw new CustomBadRequestException("User with username: \"" + username + "\" already exists.");
+            throw new CustomBadRequestException("User with username " + username + " already exists.");
         }
     }
 
     public void usernameDoesNotExist (String username) {
         if(!userDAO.existsByUsername(username)){
-            throw new CustomBadRequestException("User with username: \"" + username + "\" doesn't exist.");
+            throw new CustomBadRequestException("User with username " + username + " doesn't exist.");
         }
     }
 
