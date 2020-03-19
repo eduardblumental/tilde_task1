@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -38,13 +40,6 @@ public class UserService {
         }
     }
 
-//    public void valueIsPassed (Long parameter){
-//        if(parameter == null){
-//            Long newParameter = 0L;
-//            parameter = newParameter;
-//        }
-//    }
-
     public ResponseStatus addNewUser (NewUserDTO newUserDTO){
         usernameAlreadyExists(newUserDTO.getUsername());
         User user = new User();
@@ -57,4 +52,22 @@ public class UserService {
         userDAO.save(user);
         return ResponseStatus.OK;
     }
+
+    public User viewUser (String username){
+        Optional<User> optionalUser = userDAO.findById(findUserIdByUsername(username));
+        User user = optionalUser.get();
+        return user;
+    }
+
+    public List<User> displayAllUsers (){
+        List<User> list = new ArrayList<>();
+
+        for (User user : userDAO.findAll()){
+            list.add(user);
+        }
+
+        return list;
+    }
+
+
 }
