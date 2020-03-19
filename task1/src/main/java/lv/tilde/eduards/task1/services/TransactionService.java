@@ -9,7 +9,7 @@ import lv.tilde.eduards.task1.enums.ResponseStatus;
 import lv.tilde.eduards.task1.enums.TransactionType;
 import lv.tilde.eduards.task1.exceptions.CustomBadRequestException;
 import lv.tilde.eduards.task1.objects.Transaction;
-import lv.tilde.eduards.task1.objects.User;
+import lv.tilde.eduards.task1.objects.SystemUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -47,11 +47,11 @@ public class TransactionService {
         transaction.setReceiverId(userService.findUserIdByUsername(newTransactionDTO.getReceiver()));
         transactionDAO.save(transaction);
 
-        Optional<User> optionalSender = userDAO.findById(transaction.getSenderId());
-        User sender = optionalSender.get();
+        Optional<SystemUser> optionalSender = userDAO.findById(transaction.getSenderId());
+        SystemUser sender = optionalSender.get();
 
-        Optional<User> optionalReceiver = userDAO.findById(transaction.getReceiverId());
-        User receiver = optionalReceiver.get();
+        Optional<SystemUser> optionalReceiver = userDAO.findById(transaction.getReceiverId());
+        SystemUser receiver = optionalReceiver.get();
 
         if(transaction.getTransactionType() == TransactionType.LAND_BORROW){
             sender.setGrossDebtors(sender.getGrossDebtors() + transaction.getAmount());

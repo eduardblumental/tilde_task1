@@ -6,7 +6,7 @@ import lv.tilde.eduards.task1.DTOs.ViewUserDTO;
 import lv.tilde.eduards.task1.controllers.UserController;
 import lv.tilde.eduards.task1.enums.ResponseStatus;
 import lv.tilde.eduards.task1.exceptions.CustomBadRequestException;
-import lv.tilde.eduards.task1.objects.User;
+import lv.tilde.eduards.task1.objects.SystemUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -27,11 +27,11 @@ public class UserService {
     }
 
     public Long findUserIdByUsername (String username){
-        Optional<User> optionalUser = userDAO.findByUsername(username);
+        Optional<SystemUser> optionalUser = userDAO.findByUsername(username);
         if(optionalUser.isEmpty()){
             throw new CustomBadRequestException("User with username " + username + " doesn't exist.");
         }
-        User user = optionalUser.get();
+        SystemUser user = optionalUser.get();
         return user.getId();
     }
 
@@ -49,7 +49,7 @@ public class UserService {
 
     public ResponseStatus addNewUser (NewUserDTO newUserDTO){
         usernameAlreadyExists(newUserDTO.getUsername());
-        User user = new User();
+        SystemUser user = new SystemUser();
         user.setUsername(newUserDTO.getUsername());
         user.setGrossDebtors(newUserDTO.getGrossDebtors());
         user.setGrossCreditors(newUserDTO.getGrossCreditors());
@@ -61,17 +61,17 @@ public class UserService {
         return ResponseStatus.OK;
     }
 
-    public User viewUser (ViewUserDTO viewUserDTO){
-        Optional<User> optionalUser = userDAO.findById(findUserIdByUsername(viewUserDTO.getUsername()));
-        User user = optionalUser.get();
+    public SystemUser viewUser (ViewUserDTO viewUserDTO){
+        Optional<SystemUser> optionalUser = userDAO.findById(findUserIdByUsername(viewUserDTO.getUsername()));
+        SystemUser user = optionalUser.get();
         LOGGER.info("Request to view " + user.getUsername() + " has been submitted.");
         return user;
     }
 
-    public List<User> displayAllUsers (){
-        List<User> list = new ArrayList<>();
+    public List<SystemUser> displayAllUsers (){
+        List<SystemUser> list = new ArrayList<>();
 
-        for (User user : userDAO.findAll()){
+        for (SystemUser user : userDAO.findAll()){
             list.add(user);
         }
 

@@ -13,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
 @Builder
 @Entity
 @Data
-public class User {
+public class SystemUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

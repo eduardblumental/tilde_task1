@@ -4,7 +4,7 @@ import lv.tilde.eduards.task1.DTOs.ViewUserDTO;
 import lv.tilde.eduards.task1.DTOs.NewUserDTO;
 import lv.tilde.eduards.task1.enums.ResponseStatus;
 import lv.tilde.eduards.task1.exceptions.CustomBadRequestException;
-import lv.tilde.eduards.task1.objects.User;
+import lv.tilde.eduards.task1.objects.SystemUser;
 import lv.tilde.eduards.task1.services.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @PostMapping (value = "/view-user", produces = MediaType.APPLICATION_JSON_VALUE)
-    public User viewUser (@RequestBody @Valid ViewUserDTO viewUserDTO, BindingResult bindingResult){
+    public SystemUser viewUser (@RequestBody @Valid ViewUserDTO viewUserDTO, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new CustomBadRequestException("Wrong Input. Please try again.");
         }
@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @GetMapping (value = "/user-list", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<User> userList () {
+    public List<SystemUser> userList () {
 
         return userService.displayAllUsers();
     }
